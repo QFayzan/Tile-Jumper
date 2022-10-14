@@ -640,7 +640,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Name in Progress '
+  m_text: Tile Jumper
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -776,11 +776,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "This is an endless Puzzle \"Runner\" game the goal is to stay on white
-    tiles and avoid reds. Blue tiles will give you a huge  jump.\nAs a strategy based
-    game a white tile will only be destroyed when you leave it. Our goal is to have
-    the higest score possible.\n\nWhe jump icon is enabled press SPACE to jump it
-    has a hard coded cooldown of 3 seconds.\n\n                            Game Loads
-    in 5 seconds"
+    tiles and avoid reds.\nBlue tiles will give you a huge  jump.\nPink tiles have
+    the smallest chance to spawn and will give you 1 health.\nAs a strategy based
+    game a white tile will only be destroyed when you leave it.\nOur goal is to have
+    the higest score possible.\na timer will increase only when moving if it reaches
+    10 seconds you gain health.\nWhe jump icon is enabled press SPACE to jump it
+    has a hard coded cooldown of 3 seconds.\n                                           
+    Game Loads in 5 seconds"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -807,8 +809,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -843,7 +845,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -450.11212, y: 0, z: -447.9364, w: -330.73523}
+  m_margin: {x: -426.4673, y: 0, z: -435.5193, w: -330.73523}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

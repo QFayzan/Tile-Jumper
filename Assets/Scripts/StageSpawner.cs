@@ -58,9 +58,11 @@ public class StageSpawner : MonoBehaviour {
         lastStageLength = stageLength;
         OnNewRound();
         roundNumber++;
+        FindObjectOfType<AudioManager>().Play("LevelUp");
+        //Play LevelUp Sound
     }
-  
-   public void SpawnStage()
+
+    public void SpawnStage()
     {
         //Basically only edit stage length for rows and columns
         ColumnLength = stageLength;
@@ -78,6 +80,7 @@ public class StageSpawner : MonoBehaviour {
         totalTiles = stageLength * ColumnLength;
         //Have to set this to 0 since it stays static and messes up the gameplay
         GameManager.tilesDestroyed = 0;
+        
     }
     public void DestroyStage()
     {

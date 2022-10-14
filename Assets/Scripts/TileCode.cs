@@ -9,6 +9,7 @@ public class TileCode : MonoBehaviour
     bool isExplodeTile = false;
     bool isJumpTile = false;
     bool isNormalTile = false;
+    bool isHealthTile = false;
     private Rigidbody rb;
     [SerializeField] private int i = 0;
 
@@ -19,8 +20,14 @@ public class TileCode : MonoBehaviour
     {
         rb=GetComponent<Rigidbody>();
         i = Random.Range(0,100);
-        if (i < 15)
-        { //First spporach is to tag here and get player to act as trigger
+        if (i<3)
+        {
+            GetComponent<Renderer>().material.color = Color.magenta;
+            isHealthTile = true;
+            this.gameObject.name = "Magenta";
+        }
+        if (i > 3 && i < 15)
+        { 
             //gameobject red
             GetComponent<Renderer>().material.color = Color.red;
             isExplodeTile = true;
@@ -63,7 +70,8 @@ public class TileCode : MonoBehaviour
                 other.gameObject.GetComponent<PlayerController>().health-=2;
                 other.gameObject.GetComponent<PlayerController>().BounceUp(other.gameObject);
                 other.gameObject.GetComponent<Animator>().SetBool("IsJumping", true);
-                //Destroy(other.gameObject);
+                //Play Hurt Sound
+                FindObjectOfType<AudioManager>().Play("Hurt");
                 Destroy(gameObject);
             }
             else if (isJumpTile)
@@ -71,9 +79,22 @@ public class TileCode : MonoBehaviour
                 other.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 4, ForceMode.Impulse);
                 other.gameObject.GetComponent<Animator>().SetBool("IsJumping", true);
                 //other.transform.position = new Vector3(other.transform.position.x, 4, other.transform.position.z);
+                FindObjectOfType<AudioManager>().Play("Jump");
                 Destroy(gameObject);
                 ScoreManager.score++;
                 GameManager.tilesDestroyed++;
+            }
+            else if (isHealthTile)
+            {
+                other.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 4, ForceMode.Impulse);
+                other.gameObject.GetComponent<Animator>().SetBool("IsJumping", true);
+                //other.transform.position = new Vector3(other.transform.position.x, 4, other.transform.position.z);
+                FindObjectOfType<AudioManager>().Play("Jump");
+                Destroy(gameObject);
+                ScoreManager.score++;
+                GameManager.tilesDestroyed++;
+                other.gameObject.GetComponent<PlayerController>().health += 1;
+                FindObjectOfType<AudioManager>().Play("HPup");
             }
            
          }
@@ -90,6 +111,7 @@ public class TileCode : MonoBehaviour
                 Destroy(gameObject, 0.5f);
                 GameManager.tilesDestroyed++;
                 GameManager.tilesToDestroy--;
+                FindObjectOfType<AudioManager>().Play("Score");
             }
 
         }

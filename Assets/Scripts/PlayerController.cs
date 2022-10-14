@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class PlayerController : Characters
 {
+    
     public TextMeshProUGUI healthDisplay;
     public TextMeshProUGUI healthIncreaseTimerDisplay;
     
@@ -19,38 +20,55 @@ public class PlayerController : Characters
         rb = GetComponent<Rigidbody>();
         tf = GetComponent<Transform>();
         animator = GetComponent<Animator>();
+        _joystick = FindObjectOfType<FixedJoystick>();
         moveSpeed = 3;
         health = 4;
         jumpTimer = 0;
         healthTimer = 0;
+        healthTimerDisplay = 10;
         rotationSpeed = 720;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        healthIncreaseTimerDisplay.text = "Gain Life in :" + healthTimer + " seconds";
+        healthIncreaseTimerDisplay.text = "Walk on White Tiles for :" + (healthTimerDisplay- healthTimer).ToString("F0") + " seconds";
         healthDisplay.text = "Health : " + health.ToString();
         jumpTimer += Time.deltaTime;
         //base. keyword is used for inheritence
-        BasicMovement();
+        
         InputLimit();
         CanJump();
         HealthIncrease();
+
+        if (health < 1)
+        {
+            Death();
+        }
+    }
+    private void FixedUpdate()
+    {
+        //physics based movement in fixed update
+        BasicMovement();
+        JoyStickMovement();
     }
 
     void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Floor")
         {
-            if (health > 0.5f)
+            if (health > 0)
             {
                 BounceUp(this.gameObject);
+                FindObjectOfType<AudioManager>().Play("Hurt");
                 health--;
             }
             else if (health < 1)
             {
                 Death();
+                //Play DeathSound
+                FindObjectOfType<AudioManager>().Play("Death");
             }
         }
         else if (other.gameObject.name==("White"))
