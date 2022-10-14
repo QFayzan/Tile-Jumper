@@ -33,7 +33,7 @@ public class PlayerController : Characters
     // Update is called once per frame
     void Update()
     {
-        healthIncreaseTimerDisplay.text = "keep moving for" + (healthTimerDisplay- healthTimer).ToString("F0") + " seconds to get more HP";
+        healthIncreaseTimerDisplay.text = "keep moving for " + (healthTimerDisplay- healthTimer).ToString("F0") + " seconds to get more HP";
         healthDisplay.text = "Health : " + health.ToString();
         jumpTimer += Time.deltaTime;
         //base. keyword is used for inheritence
@@ -58,18 +58,22 @@ public class PlayerController : Characters
     {
         if (other.gameObject.tag == "Floor")
         {
-            if (health > 0)
-            {
-                BounceUp(this.gameObject);
-                FindObjectOfType<AudioManager>().Play("Hurt");
-                health--;
-            }
-            else if (health < 1)
-            {
-                Death();
-                //Play DeathSound
-                FindObjectOfType<AudioManager>().Play("Death");
-            }
+            //Instant death
+            Death();
+            isDead = true;
+            GameOver();
+            /*  if (health > 0)
+              {
+                  BounceUp(this.gameObject);
+                  FindObjectOfType<AudioManager>().Play("Hurt");
+                  health--;
+              }
+              else if (health < 1)
+              {
+                  Death();
+                  //Play DeathSound
+                  FindObjectOfType<AudioManager>().Play("Death");
+              }*/
         }
         else if (other.gameObject.name==("White"))
             {

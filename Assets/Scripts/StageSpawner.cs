@@ -72,7 +72,6 @@ public class StageSpawner : MonoBehaviour {
         {
             for (int j = 0; j < RowHeight; j++)
             {
-
                 stageUnit[i, j] = (GameObject)Instantiate(floor, new Vector3(i, 0, j), Quaternion.identity);
             }
 

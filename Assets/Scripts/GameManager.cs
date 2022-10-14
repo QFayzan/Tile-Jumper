@@ -14,10 +14,10 @@ public class GameManager : Characters
     public GameObject jumpButton;
     public GameObject jumpInstruction;
     public GameObject pedestal;
-    [SerializeField]int endgame = 0;
-    [SerializeField]float endgame2 = 0;
-    [SerializeField]public static int tilesDestroyed = 0;
-    public static int  tilesToDestroy = 0;
+    [SerializeField] int endgame = 0;
+    [SerializeField] float endgame2 = 0;
+    [SerializeField] public static int tilesDestroyed = 0;
+    public static int tilesToDestroy = 0;
     public bool isFinished = false;
 
     // Start is called before the first frame update
@@ -42,6 +42,7 @@ public class GameManager : Characters
             jumpButton.SetActive(false);
             jumpInstruction.SetActive(false);
         }
+        /*
         //ShowTilesToDestroy();
         if (tilesDestroyed > endgame2)
         {
@@ -64,12 +65,13 @@ public class GameManager : Characters
             endgame = 0;
             endgame2 = 0;
         }
-    }
-    //ShowReducing nneds work
-    /*void ShowTilesToDestroy()
-    {
-        tilesToDestroy = endgame - (int)endgame2; //needs work right here
-        ScoreToGet.text = "Tiles to Destroy :  " + Mathf.RoundToInt(tilesToDestroy).ToString();
     }*/
+        //ShowReducing nneds work
+        /*void ShowTilesToDestroy()
+        {
+            tilesToDestroy = endgame - (int)endgame2; //needs work right here
+            ScoreToGet.text = "Tiles to Destroy :  " + Mathf.RoundToInt(tilesToDestroy).ToString();
+        }*/
 
+    }
 }

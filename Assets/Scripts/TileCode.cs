@@ -10,7 +10,9 @@ public class TileCode : MonoBehaviour
     bool isJumpTile = false;
     bool isNormalTile = false;
     bool isHealthTile = false;
-    private Rigidbody rb;
+    bool isYellowTile = false;
+    bool isGreenTile = false;
+    bool greenTileSpawned = false;
     [SerializeField] private int i = 0;
 
     
@@ -18,7 +20,6 @@ public class TileCode : MonoBehaviour
 
     void Start()
     {
-        rb=GetComponent<Rigidbody>();
         i = Random.Range(0,100);
         if (i<3)
         {
@@ -43,13 +44,27 @@ public class TileCode : MonoBehaviour
             //Bounce the player
             //lauches player gently in the air then ends itself
         }
-        else if(i>30)
+         if(i>30 && i<40)
+        {
+            //Yellow is HP -1 tile
+            this.gameObject.name = "Yellow";
+            GetComponent<Renderer>().material.color = Color.yellow;
+            isYellowTile = true;
+        }
+         if (i >40)
         {
             //white is normal tile
             this.gameObject.name = "White";
             GetComponent<Renderer>().material.color = Color.white;
             isNormalTile = true;
-
+        }
+         if (i>80 && !greenTileSpawned)
+        {
+                //Green is stage clear tile
+                this.gameObject.name = "Green";
+                GetComponent<Renderer>().material.color = Color.green;
+                isGreenTile = true;
+                greenTileSpawned = true;
         }
         //more types can be added here
     }
@@ -66,12 +81,10 @@ public class TileCode : MonoBehaviour
         {
             if (isExplodeTile)
             {
-                //Implement bounce and then destroy
-                other.gameObject.GetComponent<PlayerController>().health-=2;
-                other.gameObject.GetComponent<PlayerController>().BounceUp(other.gameObject);
-                other.gameObject.GetComponent<Animator>().SetBool("IsJumping", true);
-                //Play Hurt Sound
-                FindObjectOfType<AudioManager>().Play("Hurt");
+                //Instant death
+                other.gameObject.GetComponent<PlayerController>().Death();
+                other.gameObject.GetComponent<PlayerController>().isDead = true;
+                other.gameObject.GetComponent<PlayerController>().GameOver();
                 Destroy(gameObject);
             }
             else if (isJumpTile)
@@ -96,8 +109,25 @@ public class TileCode : MonoBehaviour
                 other.gameObject.GetComponent<PlayerController>().health += 1;
                 FindObjectOfType<AudioManager>().Play("HPup");
             }
-           
-         }
+            else if (isYellowTile)
+                {
+                    //Implement bounce and then destroy
+                    other.gameObject.GetComponent<PlayerController>().health -= 1;
+                    other.gameObject.GetComponent<PlayerController>().BounceUp(other.gameObject);
+                    other.gameObject.GetComponent<Animator>().SetBool("IsJumping", true);
+                    //Play Hurt Sound
+                    FindObjectOfType<AudioManager>().Play("Hurt");
+                    Destroy(gameObject);
+                }
+            else if (isGreenTile && greenTileSpawned)
+            {
+                StageSpawner.stageLength++;
+                //BounceUp(GameObject.FindGameObjectWithTag("Player"));
+                GameManager.tilesDestroyed = 0;
+                greenTileSpawned = false;
+            }
+
+        }
     }
     void OnCollisionExit(Collision other)
     {
