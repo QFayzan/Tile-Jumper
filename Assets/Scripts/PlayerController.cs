@@ -33,7 +33,7 @@ public class PlayerController : Characters
     // Update is called once per frame
     void Update()
     {
-        healthIncreaseTimerDisplay.text = "Walk on White Tiles for :" + (healthTimerDisplay- healthTimer).ToString("F0") + " seconds";
+        healthIncreaseTimerDisplay.text = "keep moving for" + (healthTimerDisplay- healthTimer).ToString("F0") + " seconds to get more HP";
         healthDisplay.text = "Health : " + health.ToString();
         jumpTimer += Time.deltaTime;
         //base. keyword is used for inheritence
@@ -51,7 +51,7 @@ public class PlayerController : Characters
     {
         //physics based movement in fixed update
         BasicMovement();
-        JoyStickMovement();
+       //JoyStickMovement();
     }
 
     void OnCollisionEnter(Collision other)

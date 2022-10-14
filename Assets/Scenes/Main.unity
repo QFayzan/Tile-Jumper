@@ -441,7 +441,8 @@ MonoBehaviour:
   zRange: 0
   healthTimer: 0
   healthTimerDisplay: 10
-  movementDirection: {x: 0, y: 0, z: 0}
+  KeyboadMovementDirection: {x: 0, y: 0, z: 0}
+  JoystickMovementDirection: {x: 0, y: 0, z: 0}
   rotationSpeed: 0
   isJumping: 0
   isGrounded: 0
@@ -1313,6 +1314,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fixed Joystick
       objectReference: {fileID: 0}
+    - target: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
 --- !u!1 &1127701933
@@ -1467,7 +1472,8 @@ MonoBehaviour:
   zRange: 0
   healthTimer: 0
   healthTimerDisplay: 10
-  movementDirection: {x: 0, y: 0, z: 0}
+  KeyboadMovementDirection: {x: 0, y: 0, z: 0}
+  JoystickMovementDirection: {x: 0, y: 0, z: 0}
   rotationSpeed: 0
   isJumping: 0
   isGrounded: 0
@@ -1628,7 +1634,8 @@ MonoBehaviour:
   zRange: 0
   healthTimer: 0
   healthTimerDisplay: 10
-  movementDirection: {x: 0, y: 0, z: 0}
+  KeyboadMovementDirection: {x: 0, y: 0, z: 0}
+  JoystickMovementDirection: {x: 0, y: 0, z: 0}
   rotationSpeed: 0
   isJumping: 0
   isGrounded: 0

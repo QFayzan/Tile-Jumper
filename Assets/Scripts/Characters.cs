@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Characters : MonoBehaviour
 {
-   
+    
     public bool isDead = false;
     public FixedJoystick _joystick;
     public Rigidbody rb;
@@ -21,7 +21,8 @@ public class Characters : MonoBehaviour
     public static float jumpTimer = 0;
     public float healthTimer = 0;
     public float healthTimerDisplay = 10;
-    public Vector3 movementDirection;
+    public Vector3 KeyboadMovementDirection;
+    public Vector3 JoystickMovementDirection;
     public float rotationSpeed;
     public bool isJumping;
     public bool isGrounded; //here is grounded means white tile since player can walk on it
@@ -51,19 +52,19 @@ public class Characters : MonoBehaviour
             // transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * moveSpeed);
             verticalInput = Input.GetAxis("Vertical");
             // transform.Translate(Vector3.forward * verticalInput * Time.deltaTime * moveSpeed);
-            movementDirection = new Vector3(horizontalInput, 0, verticalInput);
-            movementDirection.Normalize();
-            transform.Translate(movementDirection * moveSpeed * Time.deltaTime, Space.World);
+            KeyboadMovementDirection = new Vector3(horizontalInput, 0, verticalInput);
+            KeyboadMovementDirection.Normalize();
+            transform.Translate(KeyboadMovementDirection * moveSpeed * Time.deltaTime, Space.World);
         
             if (horizontalInput != 0 || verticalInput != 0)
             {
                 healthTimer += Time.deltaTime;
             }
-            if (movementDirection != Vector3.zero)
+            if (KeyboadMovementDirection != Vector3.zero || JoystickMovementDirection!= Vector3.zero)
             {
                 //IF Moving
                 animator.SetBool("IsMoving", true);
-                Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+                Quaternion toRotation = Quaternion.LookRotation(KeyboadMovementDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
             }
             else
@@ -76,18 +77,16 @@ public class Characters : MonoBehaviour
     {
         if (!isDead)
         {
-
             rb.velocity = new Vector3(_joystick.Horizontal * moveSpeed, rb.velocity.y, _joystick.Vertical * moveSpeed);
-            movementDirection = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
+            JoystickMovementDirection = new Vector3(_joystick.Horizontal, 0, _joystick.Vertical);
             if (_joystick.Horizontal != 0 || _joystick.Vertical != 0)
             {
                 healthTimer += Time.deltaTime;
             }
-            if (movementDirection != Vector3.zero)
+            if (JoystickMovementDirection != Vector3.zero || KeyboadMovementDirection !=Vector3.zero)
             {
-                //IF Moving
                 animator.SetBool("IsMoving", true);
-                Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+                Quaternion toRotation = Quaternion.LookRotation(JoystickMovementDirection, Vector3.up);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
             }
             else
