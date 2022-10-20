@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class JumpButton : MonoBehaviour
+public class RestartButton : MonoBehaviour
 {
     public UnityEvent buttonClick;
     private void Awake()
@@ -15,13 +15,6 @@ public class JumpButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Characters.jumpTimer > 3.0f)
-        {
-            this.gameObject.SetActive(false);
-        }
-        else if (Characters.jumpTimer < 3.0f)
-        {
-            this.gameObject.SetActive(true);
-        }
+       
     }
 }

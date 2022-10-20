@@ -44,7 +44,7 @@ public class Characters : MonoBehaviour
     {
         
     }
-    public void BasicMovement()
+    /*public void BasicMovement()
     {
         if (!isDead)
         {
@@ -72,7 +72,7 @@ public class Characters : MonoBehaviour
                 animator.SetBool("IsMoving", false);
             }
         }
-    }
+    }*/
     public void JoyStickMovement()
     {
         if (!isDead)
@@ -87,7 +87,7 @@ public class Characters : MonoBehaviour
             {
                 animator.SetBool("IsMoving", true);
                 Quaternion toRotation = Quaternion.LookRotation(JoystickMovementDirection, Vector3.up);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed);
             }
             else
             {
@@ -158,6 +158,7 @@ public class Characters : MonoBehaviour
             //Play Death Anim
             animator.SetBool("IsDead", true);
             GameOver();
+            FindObjectOfType<AudioManager>().Play("Death");
             //Destroy(gameObject);
         }
     }

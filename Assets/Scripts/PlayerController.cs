@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class PlayerController : Characters
 {
-    
+    public static bool isRoundClear = false;
     public TextMeshProUGUI healthDisplay;
     public TextMeshProUGUI healthIncreaseTimerDisplay;
     
@@ -27,12 +28,17 @@ public class PlayerController : Characters
         healthTimer = 0;
         healthTimerDisplay = 10;
         rotationSpeed = 720;
-
-    }
+        isRoundClear = false;
+}
 
     // Update is called once per frame
     void Update()
     {
+        if (isRoundClear)
+        {
+            OnRoundClear();
+            isRoundClear = false;
+        }
         healthIncreaseTimerDisplay.text = "keep moving for " + (healthTimerDisplay- healthTimer).ToString("F0") + " seconds to get more HP";
         healthDisplay.text = "Health : " + health.ToString();
         jumpTimer += Time.deltaTime;
@@ -50,8 +56,8 @@ public class PlayerController : Characters
     private void FixedUpdate()
     {
         //physics based movement in fixed update
-        BasicMovement();
-       //JoyStickMovement();
+        //BasicMovement();
+       JoyStickMovement();
     }
 
     void OnCollisionEnter(Collision other)
@@ -59,21 +65,22 @@ public class PlayerController : Characters
         if (other.gameObject.tag == "Floor")
         {
             //Instant death
-            Death();
-            isDead = true;
-            GameOver();
-            /*  if (health > 0)
-              {
+            //Death();
+            //isDead = true;
+          //GameOver();
+            if (health > 0 && !isDead) 
+             {
                   BounceUp(this.gameObject);
                   FindObjectOfType<AudioManager>().Play("Hurt");
                   health--;
-              }
-              else if (health < 1)
+             } 
+           
+              else if (health <=0 )
               {
-                  Death();
+                 Death();
                   //Play DeathSound
-                  FindObjectOfType<AudioManager>().Play("Death");
-              }*/
+                 FindObjectOfType<AudioManager>().Play("Death");
+              }
         }
         else if (other.gameObject.name==("White"))
             {
@@ -84,6 +91,10 @@ public class PlayerController : Characters
         {
             animator.SetBool("IsGrounded", false);
         }
+    }
+    void OnRoundClear()
+    {
+        transform.position = new Vector3(StageSpawner.stageLength -0.5f, transform.position.y, StageSpawner.stageLength-0.5f);
     }
     
 }

@@ -20,14 +20,14 @@ public class TileCode : MonoBehaviour
 
     void Start()
     {
-        i = Random.Range(0,100);
+        i = Random.Range(0,100); 
         if (i<3)
         {
             GetComponent<Renderer>().material.color = Color.magenta;
             isHealthTile = true;
             this.gameObject.name = "Magenta";
         }
-        if (i > 3 && i < 15)
+        if (i > 3 && i <= 15)
         { 
             //gameobject red
             GetComponent<Renderer>().material.color = Color.red;
@@ -35,7 +35,7 @@ public class TileCode : MonoBehaviour
             this.gameObject.name = "Red";
             //explode / game over property 
         }
-        if (i>15 && i<30)
+        if (i>15 && i<= 30)
         {
             //gameobject blue
             GetComponent<Renderer>().material.color = Color.blue;
@@ -44,27 +44,26 @@ public class TileCode : MonoBehaviour
             //Bounce the player
             //lauches player gently in the air then ends itself
         }
-         if(i>30 && i<40)
+         if(i>30 && i<=40)
         {
             //Yellow is HP -1 tile
             this.gameObject.name = "Yellow";
             GetComponent<Renderer>().material.color = Color.yellow;
             isYellowTile = true;
         }
-         if (i >40)
+         if (i >40 && i<=80)
         {
             //white is normal tile
             this.gameObject.name = "White";
             GetComponent<Renderer>().material.color = Color.white;
             isNormalTile = true;
         }
-         if (i>80 && !greenTileSpawned)
+         if (i> 80 && StageSpawner.greenTileSpawned == false)
         {
-                //Green is stage clear tile
-                this.gameObject.name = "Green";
-                GetComponent<Renderer>().material.color = Color.green;
-                isGreenTile = true;
-                greenTileSpawned = true;
+            this.gameObject.name = "Green";
+            GetComponent<Renderer>().material.color = Color.green;
+            isGreenTile = true;
+            StageSpawner.greenTileSpawned = true;
         }
         //more types can be added here
     }
@@ -83,8 +82,7 @@ public class TileCode : MonoBehaviour
             {
                 //Instant death
                 other.gameObject.GetComponent<PlayerController>().Death();
-                other.gameObject.GetComponent<PlayerController>().isDead = true;
-                other.gameObject.GetComponent<PlayerController>().GameOver();
+                FindObjectOfType<AudioManager>().Play("Death");
                 Destroy(gameObject);
             }
             else if (isJumpTile)
@@ -110,7 +108,7 @@ public class TileCode : MonoBehaviour
                 FindObjectOfType<AudioManager>().Play("HPup");
             }
             else if (isYellowTile)
-                {
+             {
                     //Implement bounce and then destroy
                     other.gameObject.GetComponent<PlayerController>().health -= 1;
                     other.gameObject.GetComponent<PlayerController>().BounceUp(other.gameObject);
@@ -118,13 +116,16 @@ public class TileCode : MonoBehaviour
                     //Play Hurt Sound
                     FindObjectOfType<AudioManager>().Play("Hurt");
                     Destroy(gameObject);
-                }
-            else if (isGreenTile && greenTileSpawned)
+             }
+            else if (isGreenTile)
             {
                 StageSpawner.stageLength++;
-                //BounceUp(GameObject.FindGameObjectWithTag("Player"));
+                StageSpawner.greenTileSpawned = false;
+                other.gameObject.GetComponent<PlayerController>().BounceUp(other.gameObject);
                 GameManager.tilesDestroyed = 0;
-                greenTileSpawned = false;
+                //greenTileSpawned = false;
+                Destroy(gameObject);
+                PlayerController.isRoundClear = true;
             }
 
         }

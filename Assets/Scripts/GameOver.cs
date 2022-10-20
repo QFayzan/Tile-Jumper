@@ -23,7 +23,11 @@ public class GameOver : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
+            RestartGame();
         }
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 }
